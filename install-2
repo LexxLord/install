@@ -1,6 +1,8 @@
 #!/bin/bash
 # -*- coding: utf-8 -*-
 
+pacman -Syyuu
+
 pacman -S ppp netctl ntp dhcpcd dhclient samba git sshfs net-tools reflector --noconfirm
 pacman -S xorg xorg-apps xorg-drivers xorg-xinit xorg-xprop --noconfirm
 pacman -S xfce4 sddm gvfs network-manager-applet --noconfirm
