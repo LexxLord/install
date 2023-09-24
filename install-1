@@ -1,0 +1,17 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+
+mkfs.fat -F32 /dev/sda1
+mkfs.ext4 /dev/sda2
+
+mount /dev/sda2 /mnt
+mkdir /mnt/boot
+mount /dev/sda1 /mnt/boot
+
+pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers mc sudo networkmanager
+
+genfstab -U /mnt >> /mnt/etc/fstab
+
+cp -av ./install-2-usr /mnt
+
+arch-chroot /mnt

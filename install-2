@@ -1,0 +1,29 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+
+pacman -S ppp netctl ntp dhcpcd dhclient samba git sshfs net-tools reflector --noconfirm
+pacman -S xorg xorg-apps xorg-drivers xorg-xinit xorg-xprop --noconfirm
+pacman -S xfce4 sddm gvfs network-manager-applet --noconfirm
+
+pacman -S grub efibootmgr os-prober bash-completion --noconfirm
+grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=GRUB
+grub-mkconfig -o /boot/grub/grub.cfg
+
+systemctl enable ntpd systemd-networkd systemd-resolved dhcpcd NetworkManager sshd sddm
+
+sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+useradd -m -g users -G wheel -s /bin/bash lexx
+
+loadkeys ru
+setfont cyr-sun16
+sed -i 's/#ru_RU.UTF-8 UTF-8/ru_RU.UTF-8 UTF-8/' /etc/locale.gen
+sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
+
+echo -e "#LANG=en_US.UTF-8\nLANG=ru_RU.UTF-8" > /etc/locale.conf
+echo -e "KEYMAP=ru\nFONT=cyr-sun16" > /etc/vconsole.conf
+
+ln -sf /usr/share/zoneinfo/Asia/Almaty /etc/localtime
+hwclock --systohc --utc
+echo archlinux > /etc/hostname
+
+echo -e "Set passwords for ROOT & USER"
