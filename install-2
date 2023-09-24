@@ -11,7 +11,7 @@ grub-mkconfig -o /boot/grub/grub.cfg
 
 systemctl enable ntpd systemd-networkd systemd-resolved dhcpcd NetworkManager sshd sddm
 
-sed -i 's/# %wheel ALL=(ALL) ALL/%wheel ALL=(ALL) ALL/' /etc/sudoers
+sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 echo "Enter a new username:"
 read -r varname
 useradd -m -g users -G wheel -s /bin/bash "$varname"
@@ -23,6 +23,8 @@ sed -i 's/#en_US.UTF-8 UTF-8/en_US.UTF-8 UTF-8/' /etc/locale.gen
 
 echo -e "#LANG=en_US.UTF-8\nLANG=ru_RU.UTF-8" > /etc/locale.conf
 echo -e "KEYMAP=ru\nFONT=cyr-sun16" > /etc/vconsole.conf
+
+locale-gen
 
 echo "Enter your time zone (Asia/Almaty):"
 read -r varloc
