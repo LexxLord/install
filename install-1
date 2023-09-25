@@ -18,4 +18,5 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # cp -av ./install-2 /mnt
 cp -av ../install /mnt
 
-arch-chroot /mnt
+# arch-chroot /mnt
+echo -e "/install/./install-2" | arch-chroot /mnt
