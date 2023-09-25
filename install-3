@@ -1,0 +1,21 @@
+#!/bin/bash
+# -*- coding: utf-8 -*-
+
+mkdir /etc/sddm.conf.d
+cp -av /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf.d
+
+echo "Enter autologin username:"
+read -r varname
+
+sed -i 's/Numlock=none/Numlock=on/' /etc/sddm.conf.d/default.conf
+sed -i "s/User=/User=$varname/" /etc/sddm.conf.d/default.conf
+sed -i 's/Session=/Session=xfce/' /etc/sddm.conf.d/default.conf
+
+setfacl -m u:sddm:x /usr/share/sddm/faces/
+setfacl -m u:sddm:x /root/
+setfacl -m u:sddm:x /"$varname"/
+setfacl -m u:sddm:r /usr/share/sddm/faces/.face.icon
+setfacl -m u:sddm:r /usr/share/sddm/faces/root.face.icon
+setfacl -m u:sddm:r /usr/share/sddm/faces/"$varname".face.icon
+setfacl -m u:sddm:r /root/.face.icon
+setfacl -m u:sddm:r /"$varname"/.face.icon
