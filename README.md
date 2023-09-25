@@ -29,3 +29,8 @@ sh install-2
 ```shell
 sh install-3
 ```
+
+**Set up a repository**
+```shell
+sh install-4
+```
