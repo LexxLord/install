@@ -2,7 +2,7 @@
 
 **Install git**
 ```shell
-pacman -Sy git glibc
+pacman -Syy git glibc
 ```
 
 **Clone repository**
