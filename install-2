@@ -42,4 +42,8 @@ ln -sf /usr/share/zoneinfo/"$(tzselect)" /etc/localtime
 # hwclock --systohc --utc
 echo archlinux > /etc/hostname
 
-echo "Set passwords for 'root' & '$varname'"
+echo "Set passwords for 'root':"
+passwd
+
+echo "Set passwords for '$varname':"
+passwd "$varname"
