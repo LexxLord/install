@@ -18,4 +18,4 @@ genfstab -U /mnt >> /mnt/etc/fstab
 cd install
 cp -av ../install /mnt
 
-echo -e "cd /install\n" | arch-chroot /mnt
+arch-chroot /mnt/install
