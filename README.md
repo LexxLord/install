@@ -10,6 +10,11 @@ pacman -Sy git glibc
 git clone https://github.com/LexxLord/install.git /install
 ```
 
+**Go to install**
+```shell
+cd /install
+```
+
 **Start installation**
 ```shell
 sh install-1
