@@ -11,7 +11,7 @@ mount /dev/sda1 /mnt/boot
 pacman -Sy reflector --noconfirm
 reflector --verbose --latest 5 --age 6 --number 10 --sort rate --save /etc/pacman.d/mirrorlist
 
-pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers mc sudo networkmanager
+pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers mc sudo
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
