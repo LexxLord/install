@@ -15,7 +15,6 @@ pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers mc sudo
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-cd install
-cp -av ../install /mnt
+cp -av "$DIRSTACK" /mnt
 
 arch-chroot /mnt
