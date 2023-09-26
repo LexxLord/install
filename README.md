@@ -7,12 +7,12 @@ pacman -Sy git glibc
 
 **Clone repository**
 ```shell
-git clone https://github.com/LexxLord/install.git /install
+git clone https://github.com/LexxLord/install.git
 ```
 
 **Go to install**
 ```shell
-cd /install
+cd install
 ```
 
 **Start installation**
