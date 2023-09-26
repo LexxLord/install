@@ -23,3 +23,9 @@ setfacl -m u:sddm:r /usr/share/sddm/faces/root.face.icon
 setfacl -m u:sddm:r /usr/share/sddm/faces/"$varname".face.icon
 setfacl -m u:sddm:r /root/.face.icon
 setfacl -m u:sddm:r /home/"$varname"/.face.icon
+
+sed -i '/HOOKS=(/s/fsck)/plymouth)/' /etc/mkinitcpio.conf
+mkinitcpio -P
+
+sed -i 's/quiet/quiet splash rd.udev.log_level=3 vt.global_cursor_default=0/' /etc/default/grub
+grub-mkconfig -o /boot/grub/grub.cfg

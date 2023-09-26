@@ -59,7 +59,7 @@ cd /install
 sh install-2
 ```
 
-**Configure SDDM (Autologin)**
+**Setting Up Boot and Login (Autologin)**
 
 ```shell
 sh install-3
