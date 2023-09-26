@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 # -*- coding: utf-8 -*-
 
+HOST_NAME=archlinux
+
 pacman -Syyuu --noconfirm
 
 pacman -S reflector --noconfirm
@@ -35,7 +37,9 @@ locale-gen
 echo "Enter your time zone:"
 ln -sf /usr/share/zoneinfo/"$(tzselect)" /etc/localtime
 
-echo archlinux > /etc/hostname
+echo "${HOST_NAME}" > /etc/hostname
+
+echo -e "127.0.0.1   localhost\n::1         localhost\n127.0.1.1   ${HOST_NAME}.localdomain  ${HOST_NAME}" > /etc/hosts
 
 echo "Enter a new username:"
 read -r varname
