@@ -39,6 +39,7 @@ echo archlinux > /etc/hostname
 
 echo "Enter a new username:"
 read -r varname
+
 useradd -m -g users -G wheel -s /bin/bash "$varname"
 
 echo "Set passwords for 'root':"
