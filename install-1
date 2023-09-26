@@ -1,22 +1,23 @@
 #!/usr/bin/bash
 # -*- coding: utf-8 -*-
 
-# mkfs.fat -F32 /dev/sda1
-# mkfs.ext4 /dev/sda2
+mkfs.fat -F32 /dev/sda1
+mkfs.ext4 /dev/sda2
 
-# mount /dev/sda2 /mnt
-# mkdir /mnt/boot
-# mount /dev/sda1 /mnt/boot
+mount /dev/sda2 /mnt
+mkdir /mnt/boot
+mount /dev/sda1 /mnt/boot
 
-# pacman -Sy reflector --noconfirm
-# reflector --verbose --latest 5 --age 6 --number 10 --sort rate --save /etc/pacman.d/mirrorlist
+pacman -Sy reflector --noconfirm
+reflector --verbose --latest 5 --age 6 --number 10 --sort rate --save /etc/pacman.d/mirrorlist
 
-# pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers mc sudo networkmanager
+pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers mc sudo networkmanager
 
-# genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab
 
 # cp -av "$DIRSTACK" /mnt
 # cp -av ../"$(basename "$(pwd)")" /mnt
-cp -av "$(basename "$(dirname "$0")")" /mnt
+# cp -av "$(basename "$(dirname "$0")")" /mnt
+cp -av ../install /mnt
 
 arch-chroot /mnt
