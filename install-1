@@ -15,6 +15,6 @@ pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers mc sudo
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-cp -av "$(pwd)"/../install /mnt
+cp -av "$(pwd)"/* /mnt/install
 
 arch-chroot /mnt
