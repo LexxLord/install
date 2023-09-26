@@ -36,10 +36,10 @@ echo -e "KEYMAP=ru\nFONT=cyr-sun16" > /etc/vconsole.conf
 
 locale-gen
 
-echo "Enter your time zone (Asia/Almaty):"
-read -r varloc
-ln -sf /usr/share/zoneinfo/"$varloc" /etc/localtime
-hwclock --systohc --utc
+echo "Enter your time zone:"
+# read -r varloc
+ln -sf /usr/share/zoneinfo/"$(tzselect)" /etc/localtime
+# hwclock --systohc --utc
 echo archlinux > /etc/hostname
 
 echo "Set passwords for 'root' & '$varname'"
