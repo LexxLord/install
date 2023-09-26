@@ -21,10 +21,6 @@ systemctl enable ntpd systemd-networkd systemd-resolved dhcpcd NetworkManager ss
 
 sed -i 's/# %wheel ALL=(ALL:ALL) ALL/%wheel ALL=(ALL:ALL) ALL/' /etc/sudoers
 
-echo "Enter a new username:"
-read -r varname
-useradd -m -g users -G wheel -s /bin/bash "$varname"
-
 loadkeys ru
 setfont cyr-sun16
 
@@ -40,6 +36,10 @@ echo "Enter your time zone:"
 ln -sf /usr/share/zoneinfo/"$(tzselect)" /etc/localtime
 
 echo archlinux > /etc/hostname
+
+echo "Enter a new username:"
+read -r varname
+useradd -m -g users -G wheel -s /bin/bash "$varname"
 
 echo "Set passwords for 'root':"
 passwd
