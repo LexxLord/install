@@ -15,9 +15,6 @@ pacstrap /mnt base base-devel linux-firmware linux-zen linux-zen-headers mc sudo
 
 genfstab -U /mnt >> /mnt/etc/fstab
 
-# cp -av "$DIRSTACK" /mnt
-# cp -av ../"$(basename "$(pwd)")" /mnt
-# cp -av "$(basename "$(dirname "$0")")" /mnt
 cp -av ../install /mnt
 
 arch-chroot /mnt
