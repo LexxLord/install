@@ -18,6 +18,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # cp -av "$DIRSTACK" /mnt
 # cp -av ../"$(basename "$(pwd)")" /mnt
 # cp -av "$(basename "$(dirname "$0")")" /mnt
-cp -av ../install /mnt
+# cp -av ../install /mnt
+cp -av "$(dirname "$0")" /mnt
 
 arch-chroot /mnt
