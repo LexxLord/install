@@ -1,9 +1,15 @@
 ## Preparing for installation
 
-**Erase entire disk**
+**Erase the entire disk and install a GPT partition table**
 
 ```shell
 wipefs --all /dev/sda
+```
+
+or
+
+```shell
+echo -e "g\nw\n" | fdisk /dev/sda
 ```
 
 **Partition the disk**
