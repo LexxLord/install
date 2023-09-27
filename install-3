@@ -30,6 +30,7 @@ mkinitcpio -P
 sed -i 's/quiet/quiet splash rd.udev.log_level=3 vt.global_cursor_default=0/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
+export DBUS_SESSION_BUS_ADDRESS="unix:path=/run/user/$UID/bus"
 xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'false'
 xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' -t 'bool' -s 'false'
 xfconf-query -c xfce4-session -np '/shutdown/ShowSwitchUser' -t 'bool' -s 'false'

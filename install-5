@@ -17,6 +17,7 @@ cp -av "$(dirname "$0")"/system/.bashrc /home/"$VARNAME"
 
 mkdir /opt/app
 cp -av "$(dirname "$0")"/system/grub/modgrub /opt/app
+cp -av "$(dirname "$0")"/system/grub/MODGRUB.desktop /usr/share/applications
 
 cp -av "$(dirname "$0")"/system/grub/GlowingBlue /boot/grub/themes
 
