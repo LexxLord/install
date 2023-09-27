@@ -24,3 +24,5 @@ cp -av "$(dirname "$0")"/system/grub/GlowingBlue /boot/grub/themes
 cp -av "$(dirname "$0")"/system/services /opt/app
 ln -s /opt/app/services/term-numlock-on.service /etc/systemd/system/term-numlock-on.service
 systemctl enable term-numlock-on.service
+
+rm /tmp.usr
