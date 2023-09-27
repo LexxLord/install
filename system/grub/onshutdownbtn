@@ -1,0 +1,6 @@
+#!/bin/bash
+
+xfconf-query -c xfce4-session -np '/shutdown/ShowSuspend' -t 'bool' -s 'true'
+xfconf-query -c xfce4-session -np '/shutdown/ShowHibernate' -t 'bool' -s 'true'
+xfconf-query -c xfce4-session -np '/shutdown/ShowSwitchUser' -t 'bool' -s 'true'
+xfconf-query -c xfce4-session -np '/shutdown/ShowHybridSleep' -t 'bool' -s 'true'

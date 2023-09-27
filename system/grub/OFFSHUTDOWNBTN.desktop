@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Power off buttons (Switch off)
+Name[ru]=Кнопки выключения (Выключить)
+Comment=Disable unnecessary shutdown buttons
+Comment[ru]=Отключите ненужные кнопки выключения
+Exec=pkexec /opt/app/offshutdownbtn
+Icon=defcon
+Path=
+Terminal=true
+StartupNotify=false
