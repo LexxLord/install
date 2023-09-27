@@ -1,6 +1,8 @@
 #!/usr/bin/bash
 # -*- coding: utf-8 -*-
 
+VARNAME="$(cat /tmp.usr)"
+
 pacman -S grub-customizer
 
 Xorg :0 -configure
