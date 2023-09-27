@@ -70,3 +70,9 @@ sh install-3
 ```shell
 sh install-4
 ```
+
+**Additional settings**
+
+```shell
+sh install-5
+```

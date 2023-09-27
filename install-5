@@ -5,7 +5,7 @@ pacman -S grub-customizer
 
 Xorg :0 -configure
 
-sed -i 's/Current=/Current=xfce/' /etc/sddm.conf.d/default.conf
+sed -i 's/Current=/Current=GlowingBlue/' /etc/sddm.conf.d/default.conf
 cp -av "$(dirname "$0")"/system/sddm/GlowingBlue /usr/share/sddm/themes
 
 cp -av /root/xorg.conf.new /etc/X11/xorg.conf
