@@ -1,0 +1,10 @@
+[Unit]
+Description=numlock
+
+[Service]
+ExecStart=/opt/app/services/term-numlock-on.sh
+StandardInput=tty
+RemainAfterExit=yes
+
+[Install]
+WantedBy=multi-user.target

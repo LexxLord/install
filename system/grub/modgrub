@@ -1,0 +1,417 @@
+#!/bin/bash
+
+### BEGIN SELECT LANGUAGE ###
+case "$(locale | tr '[:lower:]' '[:upper:]')" in
+LANG=RU_RU.UTF-8*)
+
+    LMG_TH="RU"
+
+    LNG_M_T="М О Д И Ф И К А Ц И Я"
+
+    LNG_M_V1="Восстановить"
+    LNG_M_V2="Модифицировать"
+
+    LNG_TIMER="Установить время задержки GRUB"
+    LNG_SUB_EXIT="Добавить подменю \"Выход\""
+    LNG_ICONS="Дополнительные иконки"
+
+    LNG_M_D="Задержка меню GRUB в секундах"
+    LNG_M_W="Пожалуйста, вводите только цифры"
+
+    LNG_P="Обработка..."
+
+    LNG_M_R="Восстановлен"
+    LNG_M_M="Изменён"
+
+    LNG_M_C="Отменено"
+    LNG_M_A="Прервано"
+
+    LNG_M="Выход"
+    LNG_R="Перезагрузка"
+    LNG_S="Выключение"
+
+    LNG_FI_I="[Рр]езервный initramfs"
+    LNG_FI_O="резервный initramfs"
+	
+	LNG_FI_TI="[Ff]allback initramfs"
+    LNG_FI_TO="резервный initramfs"
+
+    LNG_RM_I="[Рр]ежим восстановления"
+    LNG_RM_O="режим восстановления"
+    ;;
+
+*)
+
+    LMG_TH="EN"
+
+    LNG_M_T="M O D I F I C A T I O N"
+
+    LNG_M_V1="Restore"
+    LNG_M_V2="Modify"
+
+    LNG_TIMER="Set GRUB delay time"
+    LNG_ICONS="Additional icons"
+    LNG_SUB_EXIT="Add submenu \"Exit\""
+
+    LNG_M_D="Delay GRUB menu in seconds"
+    LNG_M_W="Please enter only numbers"
+
+    LNG_P="Processing..."
+
+    LNG_M_R="Restored"
+    LNG_M_M="Modified"
+
+    LNG_M_C="Canceled"
+    LNG_M_A="Aborted"
+
+    LNG_M="Exit"
+    LNG_R="Reboot"
+    LNG_S="Shutdown"
+
+    LNG_FI_I="[Ff]allback initramfs"
+    LNG_FI_O="fallback initramfs"
+
+    LNG_RM_I="[Rr]ecovery mode"
+    LNG_RM_O="recovery mode"
+    ;;
+esac
+### END SELECT LANGUAGE ###
+
+### BEGIN HELP ###
+showHelp_EN() {
+    #cat << HLP | sed 's/l/*/g'
+cat << HLP_EN | less
+Usage: ./modgrub [OPTION]
+
+    -h, -help, --help                   Display help
+
+Exemple:
+    ./modgrub -h
+    ./modgrub -help
+    ./modgrub --help
+
+Description:
+
+Script to modify the GRUB configuration file.
+The script can optionally set the delay time of the GRUB menu, add an additional submenu to exit
+and add icon classes for menu items.
+
+Instruction:
+
+Keys:
+    "Esc"           - Exit the script.
+    "Ctrl" + "C"    - Aborted the scrip.
+    "Ctrl" + "Z"    - Emergency script interruption.
+
+Menu:
+Step 1.
+Select one option using the "Up / Down" keys and "Enter" to confirm.
+
+Step 2.
+Select an item using the Up / Down keys.
+Mark one or more items using the Space key. "Enter" to confirm.
+
+Step 3.
+Enter the delay time in seconds using only the numeric keys and press "Enter".
+HLP_EN
+}
+
+showHelp_RU() {
+cat << HLP_RU | less
+Использование: ./modgrub [OPTION]
+
+    -h, -help, --help                   Вывести справку
+
+Пример:
+    ./modgrub -h
+    ./modgrub -help
+    ./modgrub --help
+
+Описание:
+
+Скрипт для модификации файла конфигурации GRUB.
+Скрипт может по выбору установить время задержки меню GRUB, добавить дополнительное подменю для выхода
+и добавить классы иконок для пунктов меню.
+
+Инструкция:
+
+Клавиши:
+    "Esc"           - Выход из скрипта.
+    "Ctrl" + "C"    - Прерывание работы скрипта.
+    "Ctrl" + "Z"    - Аварийное прерывание работы скрипта.
+
+Меню:
+Шаг 1.
+Выберите один вариант, используя клавиши "Вверх / Вниз" и "Enter" для подтверждения.
+
+Шаг 2.
+Выберите элемент с помощью клавиш "Вверх / Вниз".
+Отметьте один или несколько элементов с помощью клавиши пробела. "Enter" для подтверждения.
+
+Шаг 3.
+Введите время задержки в секундах, используя только цифровые клавиши, и нажмите "Enter".
+HLP_RU
+}
+
+options=$(getopt -l "help" -o "h" -a -- "$@")
+
+eval set -- "$options"
+
+while true
+do
+    case $1 in
+        -h|--help)
+            showHelp_"${LMG_TH}"
+        exit 0;;
+        --)
+            shift
+        break;;
+        *) exit 0
+    esac
+    shift
+done
+### END HELP ###
+
+### BEGIN SPINNER ###
+sp=('│' '/' '─' ''\\'')
+sc=0
+
+for ((i = 0; i < ${#sp}; i++)); do
+    sps+=" "
+done
+
+spin() {
+    while :; do
+        printf '%s\e['${#sp}'D' "${sp[sc++ % ${#sp[@]}]}"
+        sleep .1
+    done
+}
+### END SPINNER ###
+
+### BEGIN MULTIMENU ###
+OPT_DIV="÷"
+LEFT_OFFSET="15"
+CHK="☼"
+TARGET="/boot/grub/grub.cfg"
+TIMER=false
+ICONS=false
+SUB_EXIT=false
+
+function multimenu {
+
+    case "${1}" in
+        "selector")     option=$2;;
+        "checker")      option=$3;;
+    esac
+    
+    IFS="${OPT_DIV}" read -r -a options <<< "$option"
+    for((i = 0; i < ${#options[@]}; i++)); do max=$((${#options[i]} > max ? ${#options[i]} : max)); done
+
+    max_alloc()         { for ((i = 0; i < $(( "${max}" - "${#1}" )); i++)); do spa+=" "; done; echo "${spa}"; }
+
+    cursor_on()         { printf "\e[?25h"; }
+    cursor_off()        { printf "\e[?25l"; }
+    cursor_to()         { echo -e "\e[${1};${2:-1}H"; }
+    print_option()      { echo -e "\e[${LEFT_OFFSET}C   ${1}$(max_alloc "${1}")   \e[0m"; }
+    print_selected()    { echo -e "\e[${LEFT_OFFSET}C\e[44m[→ ${1}$(max_alloc "${1}") ←]\e[0m"; }
+    print_checked()     { echo -e "\e[${LEFT_OFFSET}C  [${2}] ${1}$(max_alloc "${1}")   \e[0m"; }
+    print_unchecked()   { echo -e "\e[${LEFT_OFFSET}C\e[44m[→[${2}] ${1}$(max_alloc "${1}") ←]\e[0m"; }
+    get_cursor_row()    { IFS=';' read -rsdR -p $'\E[6n' ROW COL; echo "${ROW#*[}"; }
+
+    ((COL))
+
+    key_input() {
+
+        while (( "$#" )); do shift; if [[ "${1}" = "-t" ]]; then args+=(-t "$1"); fi; done
+
+        IFS= read "${args[@]}" -rsn1 key 2>/dev/null >&2
+
+        read -rsN1 -t 0.0001 k1; read -rsN1 -t 0.0001 k2
+
+        key+="${k1}${k2}"
+
+        case "${key}" in
+            $'\x1b'|'q'|'Q')    key=esc;;
+            $'\e[A'|$'\e0A')    key=up;;
+            $'\e[B'|$'\e0B')    key=down;;
+            $'\e'|'')           key=enter;;
+            $'\x20'|' ')        key=space;;
+        esac
+
+        echo "${key}"
+    }
+
+    toggle_option() {
+    arr_name=$1
+    eval "local arr=(\"\${${arr_name}[@]}\")"
+
+    option=$2
+    if [[ ${arr[option]} == true ]]; then
+        arr[option]=
+    else
+        arr[option]=true
+    fi
+    eval "$arr_name"='("${arr[@]}")'
+    }    
+
+    retval=$2
+
+    if [[ -z $4 ]]; then
+        defaults=()
+    else
+        IFS=';' read -r -a defaults <<< "$4"
+    fi
+
+    checked=()
+    for ((i=0; i<${#options[@]}; i++)); do checked+=("${defaults[i]}"); done
+
+    lastrow=$(get_cursor_row)
+
+    trap 'cursor_blink_on; clear; echo -e "\a\e[31m${LNG_M_A}\e[0m"; exit' 1 2 3 15
+    
+    cursor_off
+
+    active=0
+    while true; do
+        idx=0
+        for option in "${options[@]}"; do
+            prefix=" "
+            if [[ ${checked[idx]} == true ]]; then
+                prefix="${CHK}"
+            fi
+
+            cursor_to $((lastrow + idx))
+
+            if [ $idx -eq ${active} ]; then
+                case "${1}" in
+                    "selector")     print_selected "${option}";;
+                    "checker")      print_unchecked "${option}" "$prefix";;
+                esac
+            else
+                case "${1}" in
+                    "selector")     print_option "${option}";;
+                    "checker")      print_checked "${option}" "$prefix";;
+                esac
+            fi
+            ((idx++))
+        done
+
+        case $(key_input "$@") in
+            enter)  break;;
+            space)  toggle_option checked $active;;
+            up)     ((active--)); if [ "${active}" -lt 0 ]; then active=$((${#options[@]} - 1)); fi;;
+            down)   ((active++)); if [ "${active}" -ge ${#options[@]} ]; then active=0; fi;;
+            esc)    cursor_on; clear; echo -e "\a\e[33m${LNG_M_C}\e[0m"; exit;;
+        esac
+    done
+
+    cursor_to "$lastrow"
+    printf "\n"
+    cursor_on
+
+    case "${1}" in
+        "selector")     return "${active}";;
+        "checker")      eval "$retval"='("${checked[@]}")';;
+    esac
+}
+### END MULTIMENU ###
+
+### BEGIN MENU ###
+sel_item=("\e[36m${LNG_M_V1} GRUB\e[39m${OPT_DIV}\e[33m${LNG_M_V2} GRUB\e[39m")
+chk_item=("\e[36m${LNG_TIMER}\e[39m${OPT_DIV}\e[33m${LNG_SUB_EXIT}\e[39m${OPT_DIV}\e[35m${LNG_ICONS}\e[39m")
+
+clear
+
+title_upd() { echo -e "\e[5E\e[${LEFT_OFFSET}C\e[1m\e[33m\e[41m ${LNG_M_T} - G R U B \e[0m\n"; }
+title_upd
+
+multimenu "selector" "${sel_item[@]}"
+
+choice=$?
+
+if [[ ${choice} -eq 0 ]]; then
+    printf "\e[?25l"
+    echo -e "\e[2E\e[${LEFT_OFFSET}C\e[1m\e[33m[${sps}] ${LNG_P}"
+    tput cup 11 16
+    spin &
+    grub-mkconfig -o ${TARGET} 2>/dev/null
+    pkill -P $$
+    clear
+    echo -e "\a\e[1m\e[32mGRUB ${LNG_M_R}!!!\e[0m"
+    printf "\e[?25h"
+    exit
+elif [[ ${choice} -eq 1 ]]; then
+    clear
+    title_upd
+    multimenu "checker" result "${chk_item[@]}" ";true;true"
+    result=( "${result[@]}" )
+    if [[ ${result[0]} = "true" ]]; then
+        PTR="$(printf "\n\e[%sC[→ \e[32m${LNG_M_D}: \e[39m" "${LEFT_OFFSET}")"
+        timeout_read () {
+            while :
+            do
+                read -er timeout
+                [[ ${timeout} =~ ^[0-9]+$ ]] && return `
+                `|| echo -e "\e[${LEFT_OFFSET}C[! \e[35m${LNG_M_W}!\e[39m" && printf "%s" "${PTR}"
+            done
+        }
+        clear
+        title_upd
+        printf "%s" "${PTR}"
+        timeout_read
+        TIMER=true
+    fi
+    if [[ ${result[1]} = "true" ]]; then SUB_EXIT=true; fi
+    if [[ ${result[2]} = "true" ]]; then ICONS=true; fi
+else echo -e "Сбой скрипта!!!"
+fi
+### END MENU ###
+
+printf "\e[?25l"
+echo -e "\e[3E\e[${LEFT_OFFSET}C\e[1m\e[33m[${sps}] ${LNG_P}"
+tput cup 12 16
+spin &
+grub-mkconfig -o ${TARGET} 2>/dev/null
+pkill -P $$
+clear
+echo -e "\a\e[1m\e[32mGRUB ${LNG_M_M}!!!\e[0m"
+
+### BEGIN EDIT GRUB ###
+if [[ ${TIMER} = "true" ]]; then
+    sed -i "s/timeout=.*/timeout=${timeout}/" ${TARGET}
+fi
+
+if [[ ${ICONS} = "true" ]]; then
+    sed -i '/submenu\s'\''/s/'\''\s[\$]*/'\'' --class submenu $/' ${TARGET}
+    sed -i '/submenu\s"/s/"{/" --class submenu {/' ${TARGET}
+
+    sed -i "s/(${LNG_FI_I})'\s/(${LNG_FI_O})' --class initramfs /" ${TARGET}
+    sed -i "s/(${LNG_FI_I})\"\s/(${LNG_FI_O})\" --class initramfs /" ${TARGET}
+    sed -i "s/(${LNG_FI_TI})'\s/(${LNG_FI_TO})' --class initramfs /" ${TARGET}
+    sed -i "s/(${LNG_FI_TI})\"\s/(${LNG_FI_TO})\" --class initramfs /" ${TARGET}
+
+    sed -i "s/(${LNG_RM_I})'\s/(${LNG_RM_O})' --class recovery /" ${TARGET}
+    sed -i "s/(${LNG_RM_I})\"\s/(${LNG_RM_O})\" --class recovery /" ${TARGET}
+
+    sed -i '/menuentry\s'\''[UEFIuefi]/s/'\''\s[\$]*/'\'' --class uefi $/' ${TARGET}
+    sed -i '/menuentry\s"[UEFIuefi]/s/"\s\$/" --class uefi $/' ${TARGET}
+fi
+
+if [[ ${SUB_EXIT} = "true" ]]; then
+    cat >>${TARGET} <<EOF
+
+    ### BEGIN Exit Menu
+    submenu '${LNG_M}' --class exit {
+        menuentry '${LNG_R}' --class restart \$menuentry_id_option 'reboot' {
+            reboot
+        }
+        menuentry '${LNG_S}' --class shutdown \$menuentry_id_option 'poweroff' {
+            halt
+        }
+    }
+    ### END Exit Menu
+EOF
+fi
+### END EDIT GRUB ###
+
+printf "\e[?25h"

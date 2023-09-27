@@ -42,12 +42,14 @@ echo "${HOST_NAME}" > /etc/hostname
 echo -e "127.0.0.1   localhost\n::1         localhost\n127.0.1.1   ${HOST_NAME}.localdomain  ${HOST_NAME}" > /etc/hosts
 
 echo "Enter a new username:"
-read -r varname
+read -r VARNAME
 
-useradd -m -g users -G wheel -s /bin/bash "$varname"
+useradd -m -g users -G wheel -s /bin/bash "$VARNAME"
 
 echo "Set passwords for 'root':"
 passwd
 
-echo "Set passwords for '$varname':"
-passwd "$varname"
+echo "Set passwords for '$VARNAME':"
+passwd "$VARNAME"
+
+export TEST_VAR="$VARNAME"

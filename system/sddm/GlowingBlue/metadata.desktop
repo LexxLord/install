@@ -1,0 +1,14 @@
+[SddmGreeterTheme]
+Name=GlowingBlue
+Description="GlowingBlue" theme series for LightDM(WebKit2-Greeter), sddm and GRUB2
+Author=Lexx
+Copyright=(c) 2022, Lexx
+License=CC-BY-SA
+Type=sddm-theme
+Version=0.9.5
+Website=https://..., https://github.com/...
+Screenshot=screenshot.png
+MainScript=Main.qml
+ConfigFile=theme.conf
+Theme-Id=glowingblue
+Theme-API=2.0

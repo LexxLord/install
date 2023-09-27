@@ -1,0 +1,24 @@
+#!/usr/bin/bash
+# -*- coding: utf-8 -*-
+
+pacman -S grub-customizer
+
+Xorg :0 -configure
+
+sed -i 's/Current=/Current=xfce/' /etc/sddm.conf.d/default.conf
+cp -av "$(dirname "$0")"/system/sddm/GlowingBlue /usr/share/sddm/themes
+
+cp -av /root/xorg.conf.new /etc/X11/xorg.conf
+
+cp -av "$(dirname "$0")"/system/0-monitor.conf /etc/X11/xorg.conf.d/0-monitor.conf
+
+cp -av "$(dirname "$0")"/system/.bashrc /root
+cp -av "$(dirname "$0")"/system/.bashrc /home/"$VARNAME"
+
+cp -av "$(dirname "$0")"/system/grub/modgrub /opt/app
+
+cp -av "$(dirname "$0")"/system/grub/GlowingBlue /boot/grub/themes
+
+cp -av "$(dirname "$0")"/system/services /opt/app
+ln -s /opt/app/services/term-numlock-on.service /etc/systemd/system/term-numlock-on.service
+systemctl enable term-numlock-on.service

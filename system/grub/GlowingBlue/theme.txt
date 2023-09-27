@@ -1,0 +1,170 @@
+##############| GRUB2 gfxmenu Linux theme |##############
+#														#
+#					Glowing Blue Theme					#
+#														#
+# Designed for any resolution between 640x480 and more.	#
+# Предназначен для любого разрешения от 640x480 и выше.	#
+#														#
+#########################################################
+
+# Global Property
+desktop-image: "background.png"
+desktop-color: "#191919"
+
+title-text: ""
+#title-color: "#00ffff"
+#title-font: "MachineC Regular 72"
+
+message-color: "#ff0000"
+
+terminal-font: "Terminus Bold 16"
+
+terminal-box: "terminal/terminal_*.png"
+
+terminal-width: "70%"
+terminal-height: "70%"
+
+terminal-border: "10"
+
+# GRUB2 title
++ label {
+	left = 50%-200
+	
+	width = 400
+	
+	font = "MachineC Regular 72"
+	color = "#0077ff"
+	
+	text = "GLOWING BLUE HUD GRUB2"
+	
+	align = "center"
+}
+
+# Title logo
++ image {
+	left = 100%-100
+	
+	file = "misc/logo.png"
+}
+
+# Menu title
++ label {
+	top = 20%-17
+	left = 50%-100
+	
+	width = 200
+	height = 25
+	
+	font = "TerminusB Bold 18"
+	color = "#ff6600"
+	
+	text = "↑↓ BOOT SELECT"
+	
+	align = "center"
+}
+
+# Menu title frame
++ image {
+	top = 20%-25
+	left = 50%-100
+	
+	width = 200
+	height = 25
+	
+	file = "menu/title_frame.png"
+}
+
+# Show the boot menu
++ boot_menu {
+	left = 20%
+	top = 20%
+	
+	width = 60%
+	height = 40%
+	
+	menu_pixmap_style = "menu/menu_box_*.png"
+	
+	icon_width = 25
+	icon_height = 25
+	item_icon_space = 5
+	
+	item_font = "Terminus Bold 14"
+	item_color = "#ffffff"
+	item_pixmap_style = "items/item_*.png"
+	
+	item_height = 20
+	item_padding = 0
+	item_spacing = 25
+	
+	selected_item_font 	= "Terminus Bold 16"
+	selected_item_color = "#ffff00"
+	selected_item_pixmap_style = "items/select_*.png"
+	
+	scrollbar = true
+	scrollbar_width = 39
+	scrollbar_frame = "scroll/scrollbar_*.png"
+	scrollbar_thumb = "scroll/slider_*.png"
+}
+
+# Show a boot countdown indicator
++ circular_progress {
+	id = "__timeout__"
+	
+	left = 50%+163
+	top = 85%-37
+	
+	width = 31
+	height = 31
+	
+	center_bitmap = "progress/play.png"
+	tick_bitmap = "progress/tick.png"
+	
+	num_ticks = 360
+	start_angle = 0
+	ticks_disappear = "True"
+}
+
+# Show a countdown 
++ progress_bar {
+	id = "__timeout__"
+	
+	left = 50%-277
+	top = 85%-43
+	
+	width = 43
+	height = 43
+	
+	font = "Terminus Bold 14"
+	align = "center"
+	
+	text_color = "#ffff00"
+	text = "@TIMEOUT_NOTIFICATION_SHORT@"
+	
+	bar_style = "*"
+	highlight_style = "*"
+}
+
+# Show a styled horizontal progress bar
++ progress_bar {
+	id = "__timeout__"
+	
+	left = 50%-200
+	top = 85%-43
+	
+	width = 400
+	height = 43
+	
+	bar_style = "progress/progress_bar_*.png"
+	highlight_style = "progress/progress_*.png"
+}
+
+# Keymap info
++ image {
+	top = 100%-63
+	left = 50%-200
+	
+	width = 400
+	height = 58
+	
+	file = "misc/keymap_pic.png"
+}

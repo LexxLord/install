@@ -4,25 +4,25 @@
 mkdir /etc/sddm.conf.d
 cp -av /usr/lib/sddm/sddm.conf.d/default.conf /etc/sddm.conf.d
 
-echo "Enter autologin username:"
-read -r varname
+# echo "Enter autologin username:"
+# read -r VARNAME
 
 sed -i 's/Numlock=none/Numlock=on/' /etc/sddm.conf.d/default.conf
-sed -i "s/User=/User=$varname/" /etc/sddm.conf.d/default.conf
+sed -i "s/User=/User=$VARNAME/" /etc/sddm.conf.d/default.conf
 sed -i 's/Session=/Session=xfce/' /etc/sddm.conf.d/default.conf
 
-cp -av /usr/share/sddm/faces/.face.icon /usr/share/sddm/faces/"$varname".face.icon
+cp -av /usr/share/sddm/faces/.face.icon /usr/share/sddm/faces/"$VARNAME".face.icon
 cp -av /usr/share/sddm/faces/root.face.icon /root/.face.icon
-cp -av /usr/share/sddm/faces/.face.icon /home/"$varname"/.face.icon
+cp -av /usr/share/sddm/faces/.face.icon /home/"$VARNAME"/.face.icon
 
 setfacl -m u:sddm:x /usr/share/sddm/faces/
 setfacl -m u:sddm:x /root/
-setfacl -m u:sddm:x /home/"$varname"/
+setfacl -m u:sddm:x /home/"$VARNAME"/
 setfacl -m u:sddm:r /usr/share/sddm/faces/.face.icon
 setfacl -m u:sddm:r /usr/share/sddm/faces/root.face.icon
-setfacl -m u:sddm:r /usr/share/sddm/faces/"$varname".face.icon
+setfacl -m u:sddm:r /usr/share/sddm/faces/"$VARNAME".face.icon
 setfacl -m u:sddm:r /root/.face.icon
-setfacl -m u:sddm:r /home/"$varname"/.face.icon
+setfacl -m u:sddm:r /home/"$VARNAME"/.face.icon
 
 sed -i '/^HOOKS=.*/s/fsck)/plymouth)/' /etc/mkinitcpio.conf
 sed -i '/^HOOKS=.*/s/consolefont //g' /etc/mkinitcpio.conf

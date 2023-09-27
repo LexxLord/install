@@ -1,0 +1,124 @@
+{
+	"files": [
+		{
+			"path": "Main.qml",
+			"bookmarks": [
+				{
+					"line": 0,
+					"column": 5,
+					"label": "{ GlowingBlue }"
+				},
+				{
+					"line": 20,
+					"column": 11,
+					"label": "[ Timer ]"
+				},
+				{
+					"line": 27,
+					"column": 31,
+					"label": "( Update Time )"
+				},
+				{
+					"line": 30,
+					"column": 28,
+					"label": "( Authentication Message )"
+				},
+				{
+					"line": 40,
+					"column": 31,
+					"label": "( CapsLock Tracking )"
+				},
+				{
+					"line": 50,
+					"column": 39,
+					"label": "( Greeting Depending On The Time Of Day )"
+				},
+				{
+					"line": 73,
+					"column": 26,
+					"label": "[ FindUser ]"
+				},
+				{
+					"line": 94,
+					"column": 16,
+					"label": "[ PassDisplayMode ]"
+				},
+				{
+					"line": 110,
+					"column": 20,
+					"label": "[ ProcLogin ]"
+				},
+				{
+					"line": 120,
+					"column": 5,
+					"label": "[ Connection ]"
+				},
+				{
+					"line": 160,
+					"column": 5,
+					"label": "[ Greeting ]"
+				},
+				{
+					"line": 182,
+					"column": 22,
+					"label": "[ Host ]"
+				},
+				{
+					"line": 225,
+					"column": 26,
+					"label": "[ DateTime ]"
+				},
+				{
+					"line": 250,
+					"column": 24,
+					"label": "[ Avatar ]"
+				},
+				{
+					"line": 294,
+					"column": 23,
+					"label": "[ Logos ]"
+				},
+				{
+					"line": 323,
+					"column": 26,
+					"label": "[ Language ]"
+				},
+				{
+					"line": 431,
+					"column": 26,
+					"label": "[ UserName ]"
+				},
+				{
+					"line": 520,
+					"column": 26,
+					"label": "[ Password ]"
+				},
+				{
+					"line": 646,
+					"column": 25,
+					"label": "[ Session ]"
+				},
+				{
+					"line": 718,
+					"column": 28,
+					"label": "[ ErrMessage ]"
+				},
+				{
+					"line": 765,
+					"column": 27,
+					"label": "[ SysButton ]"
+				},
+				{
+					"line": 831,
+					"column": 26,
+					"label": "[ SysSound ]"
+				},
+				{
+					"line": 860,
+					"column": 31,
+					"label": "[ ProcAnimation ]"
+				}
+			]
+		}
+	]
+}
