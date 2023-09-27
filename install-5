@@ -7,7 +7,7 @@ pacman -S grub-customizer --noconfirm
 
 Xorg :0 -configure
 
-sed -i 's/Current=/Current=GlowingBlue/' /etc/sddm.conf.d/default.conf
+sed -i 's/^Current=.*/Current=GlowingBlue/' /etc/sddm.conf.d/default.conf
 cp -av "$(dirname "$0")"/system/sddm/GlowingBlue /usr/share/sddm/themes
 
 cp -av /root/xorg.conf.new /etc/X11/xorg.conf
@@ -29,7 +29,7 @@ cp -av "$(dirname "$0")"/system/onshutdownbtn /opt/app
 cp -av "$(dirname "$0")"/system/ONSHUTDOWNBTN.desktop /usr/share/applications
 
 cp -av "$(dirname "$0")"/system/grub/GlowingBlue /boot/grub/themes
-sed -i 's/^#GRUB_THEME=/GRUB_THEME=/boot/grub/themes/GlowingBlue/' /etc/default/grub
+sed -i 's/^#GRUB_THEME=.*/GRUB_THEME="\/boot\/grub\/themes\/GlowingBlue"/' /etc/default/grub
 grub-mkconfig -o /boot/grub/grub.cfg
 
 cp -av "$(dirname "$0")"/system/services /opt/app
