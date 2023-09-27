@@ -21,7 +21,7 @@ echo -e "g\nw\n" | fdisk /dev/sda
 cfdisk
 ```
 
-## install
+## Install
 
 **Install git**
 
