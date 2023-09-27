@@ -12,6 +12,6 @@ echo -e "[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacm
 
 pacman -Syyuu --noconfirm
 
-pacman -Sy pamac-aur visual-studio-code-bin grub-customizer --noconfirm
+pacman -S pamac-aur visual-studio-code-bin grub-customizer --noconfirm
 
 sed -i 's/#EnableAUR/EnableAUR/' /etc/pamac.conf
