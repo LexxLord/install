@@ -3,8 +3,6 @@
 
 VARNAME="$(cat /tmp.usr)"
 
-pacman -S grub-customizer
-
 Xorg :0 -configure
 
 sed -i 's/Current=/Current=GlowingBlue/' /etc/sddm.conf.d/default.conf
