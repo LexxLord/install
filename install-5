@@ -15,6 +15,7 @@ cp -av "$(dirname "$0")"/system/0-monitor.conf /etc/X11/xorg.conf.d/0-monitor.co
 cp -av "$(dirname "$0")"/system/.bashrc /root
 cp -av "$(dirname "$0")"/system/.bashrc /home/"$VARNAME"
 
+mkdir /opt/app
 cp -av "$(dirname "$0")"/system/grub/modgrub /opt/app
 
 cp -av "$(dirname "$0")"/system/grub/GlowingBlue /boot/grub/themes
