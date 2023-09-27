@@ -39,4 +39,6 @@ systemctl enable term-numlock-on.service
 
 chmod +x /opt/app/modgrub /opt/app/offshutdownbtn /opt/app/onshutdownbtn /opt/app/services/term-numlock-on.sh
 
+sh /opt/app/modgrub
+
 rm /tmp.usr
