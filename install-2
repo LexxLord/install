@@ -52,4 +52,4 @@ passwd
 echo "Set passwords for '$VARNAME':"
 passwd "$VARNAME"
 
-export TEST_VAR="$VARNAME"
+export VARNAME="$VARNAME"
