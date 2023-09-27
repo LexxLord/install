@@ -35,12 +35,6 @@ pacman -Sy git glibc
 git clone https://github.com/LexxLord/install.git
 ```
 
-**Go to install**
-
-```shell
-cd install
-```
-
 **Start installation**
 
 ```shell
