@@ -9,7 +9,7 @@ pacman -S reflector --noconfirm
 
 reflector --verbose --latest 10 --age 6 --number 10 --sort rate --save /etc/pacman.d/mirrorlist
 
-pacman -S ppp netctl ntp dhcpcd dhclient samba git sshfs net-tools --noconfirm
+pacman -S ppp netctl ntp dhcpcd dhcp dhclient samba git sshfs net-tools --noconfirm
 pacman -S xorg xorg-apps xorg-drivers xorg-xinit xorg-xprop --noconfirm
 pacman -S xfce4 sddm gvfs networkmanager network-manager-applet --noconfirm
 pacman -S ttf-liberation ttf-dejavu ccache sccache dosfstools plymouth --noconfirm
